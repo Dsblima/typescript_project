@@ -1,4 +1,4 @@
-import { response, Router } from "express";
+import { Router } from "express";
 
 import { SpecificationsRepository } from "../modules/cars/repositories/SpecificationsRepository";
 import { CreateSpecificationService } from "../modules/cars/services/CreateSpecificationService";
@@ -18,7 +18,7 @@ specificationsRoutes.post("/", (request, response) => {
     return response.status(201).send();
 });
 
-specificationsRoutes.get("/", () => {
+specificationsRoutes.get("/", (request, response) => {
     const all = specificationsRepository.list();
 
     return response.json(all);
