@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 3333
 
-CMD ["nodemon","--exec","npm", "run", "dev"]
+CMD ["npm", "run", "dev"]
