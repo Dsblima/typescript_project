@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { Specification } from "../../model/Specification";
+import { Specification } from "../../entities/Specification";
 import {
     ISpecificationsRepository,
     ICreateSpecificationDTO,
