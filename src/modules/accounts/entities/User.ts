@@ -4,13 +4,10 @@ import { v4 as uuidV4 } from "uuid";
 @Entity("users")
 class User {
     @PrimaryColumn()
-    id: string;
+    id?: string;
 
     @Column()
     name: string;
-
-    @Column()
-    username: string;
 
     @Column()
     password: string;
@@ -22,10 +19,10 @@ class User {
     driver_license: string;
 
     @Column()
-    isAdmin: string;
+    isAdmin: boolean;
 
     @CreateDateColumn()
-    created_at: string;
+    created_at: Date;
 
     constructor() {
         if (!this.id) {
