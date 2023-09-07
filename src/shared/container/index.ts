@@ -1,23 +1,23 @@
-import { container } from "tsyringe";
+import { container } from 'tsyringe';
 
-import { UsersRepository } from "@modules/accounts/repositories/implementations/UsersRepository";
-import { IUserRepository } from "@modules/accounts/repositories/interfaces/IUsersRepository";
-import { ICategoryRepository } from "@modules/cars/repositories/ICategoryRepository";
-import { ISpecificationsRepository } from "@modules/cars/repositories/ISpecificationsRepository";
-import { CategoriesRepository } from "@modules/cars/repositories/implementations/CategoriesRepository";
-import { SpecificationsRepository } from "@modules/cars/repositories/implementations/SpecificationsRepository";
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepository';
+import { IUserRepository } from '@modules/accounts/repositories/interfaces/IUsersRepository';
+import { CategoriesRepository } from '@modules/cars/infra/typeorm/repositories/CategoriesRepository';
+import { SpecificationsRepository } from '@modules/cars/infra/typeorm/repositories/SpecificationsRepository';
+import { ICategoryRepository } from '@modules/cars/repositories/ICategoryRepository';
+import { ISpecificationsRepository } from '@modules/cars/repositories/ISpecificationsRepository';
 
 container.registerSingleton<ICategoryRepository>(
-    "CategoriesRepository",
+    'CategoriesRepository',
     CategoriesRepository
 );
 
 container.registerSingleton<ISpecificationsRepository>(
-    "SpecificationsRepository",
+    'SpecificationsRepository',
     SpecificationsRepository
 );
 
 container.registerSingleton<IUserRepository>(
-    "UsersRepository",
+    'UsersRepository',
     UsersRepository
 );
