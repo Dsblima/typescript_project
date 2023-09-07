@@ -57,7 +57,7 @@
                 "newlinesBetween": "always",
                 "groups": [
                     "module",
-                    "/^@shared/",
+                    "/^@/",
                     [
                         "parent",
                         "sibling",
@@ -65,8 +65,7 @@
                     ]
                 ],
                 "alphabetize": {
-                    "order": "asc",
-                    "ignoreCase": true
+                   
                 }
             }
         ],

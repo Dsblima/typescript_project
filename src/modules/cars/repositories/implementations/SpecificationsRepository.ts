@@ -1,10 +1,11 @@
 /* eslint-disable no-use-before-define */
 import { getRepository, Repository } from "typeorm";
 
-import { Specification } from "../../entities/Specification";
+import { Specification } from "@modules/cars/entities/Specification";
+
 import {
-    ISpecificationsRepository,
     ICreateSpecificationDTO,
+    ISpecificationsRepository,
 } from "../ISpecificationsRepository";
 
 class SpecificationsRepository implements ISpecificationsRepository {
