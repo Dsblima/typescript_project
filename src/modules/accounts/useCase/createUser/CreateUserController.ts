@@ -1,7 +1,8 @@
-import { Response, Request } from "express";
-import { container } from "tsyringe";
+import { Request, Response } from 'express';
+import 'reflect-metadata';
+import { container } from 'tsyringe';
 
-import { CreateUserUseCase } from "./CreateUserUseCase";
+import { CreateUserUseCase } from './CreateUserUseCase';
 
 class CreateUserController {
     async handle(request: Request, response: Response): Promise<Response> {
