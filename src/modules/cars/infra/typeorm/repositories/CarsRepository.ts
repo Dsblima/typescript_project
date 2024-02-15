@@ -5,7 +5,7 @@ import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 
 import { Car } from '../entities/Car';
 
-class CarsRepository implements ICarsRepository {
+export class CarsRepository implements ICarsRepository {
     private repository: Repository<Car>;
 
     constructor() {
@@ -16,6 +16,7 @@ class CarsRepository implements ICarsRepository {
         const car = await this.repository.findOne({ license_plate });
         return car;
     }
+
     async create({
         brand,
         category_id,
@@ -39,6 +40,16 @@ class CarsRepository implements ICarsRepository {
 
         return car;
     }
-}
 
-export { CarsRepository };
+    findAll(): Promise<Car[]> {
+        throw new Error('Method not implemented.');
+    }
+
+    findAvailable(
+        category_id?: string,
+        brand?: string,
+        name?: string
+    ): Promise<Car[]> {
+        throw new Error('Method not implemented.');
+    }
+}

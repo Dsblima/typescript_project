@@ -3,7 +3,7 @@ import { Car } from '@modules/cars/infra/typeorm/entities/Car';
 
 import { ICarsRepository } from '../ICarsRepository';
 
-class CarsRepositoryInMemory implements ICarsRepository {
+export class CarsRepositoryInMemory implements ICarsRepository {
     cars: Car[] = [];
     async create({
         brand,
@@ -33,6 +33,28 @@ class CarsRepositoryInMemory implements ICarsRepository {
     async findByLicensePlate(license_plate: string): Promise<Car> {
         return this.cars.find((car) => car.license_plate === license_plate);
     }
-}
 
-export { CarsRepositoryInMemory };
+    findAll(): Promise<Car[]> {
+        throw new Error('Method not implemented.');
+    }
+
+    async findAvailable(
+        category_id?: string,
+        brand?: string,
+        name?: string
+    ): Promise<Car[]> {
+        const availableCars = this.cars.filter((car) => {
+            if (
+                car.available === true ||
+                (brand && car.brand === brand) ||
+                (name && car.name === name) ||
+                (category_id && car.category_id === category_id)
+            ) {
+                return car;
+            }
+            return null;
+        });
+
+        return availableCars;
+    }
+}
