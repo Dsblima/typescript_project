@@ -45,11 +45,31 @@ export class CarsRepository implements ICarsRepository {
         throw new Error('Method not implemented.');
     }
 
-    findAvailable(
+    async findAvailable(
         category_id?: string,
         brand?: string,
         name?: string
     ): Promise<Car[]> {
-        throw new Error('Method not implemented.');
+        const carsQuery = await this.repository
+            .createQueryBuilder('cars')
+            .where('available = :available', { available: true });
+
+        if (brand) {
+            carsQuery.andWhere('cars.brand = :brand', { brand });
+        }
+
+        if (category_id) {
+            carsQuery.andWhere('cars.category_id = :category_id', {
+                category_id,
+            });
+        }
+
+        if (name) {
+            carsQuery.andWhere('cars.name = :name', { name });
+        }
+
+        const cars = await carsQuery.getMany();
+
+        return cars;
     }
 }
