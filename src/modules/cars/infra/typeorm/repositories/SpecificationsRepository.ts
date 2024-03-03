@@ -1,26 +1,33 @@
 /* eslint-disable no-use-before-define */
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Repository } from 'typeorm';
 
-import { Specification } from "@modules/cars/infra/typeorm/entities/Specification";
+import { Specification } from '@modules/cars/infra/typeorm/entities/Specification';
 import {
     ICreateSpecificationDTO,
     ISpecificationsRepository,
-} from "@modules/cars/repositories/ISpecificationsRepository";
+} from '@modules/cars/repositories/ISpecificationsRepository';
 
-class SpecificationsRepository implements ISpecificationsRepository {
+export class SpecificationsRepository implements ISpecificationsRepository {
     private repository: Repository<Specification>;
 
     constructor() {
         this.repository = getRepository(Specification);
     }
 
+    async findByIds(ids: string[]): Promise<Specification[]> {
+        const specifications = await this.repository.findByIds(ids);
+        return specifications;
+    }
+
     async create({
         name,
         description,
-    }: ICreateSpecificationDTO): Promise<void> {
+    }: ICreateSpecificationDTO): Promise<Specification> {
         const specification = this.repository.create({ description, name });
 
         await this.repository.save(specification);
+
+        return specification;
     }
 
     async list(): Promise<Specification[]> {
@@ -33,5 +40,3 @@ class SpecificationsRepository implements ISpecificationsRepository {
         return specification;
     }
 }
-
-export { SpecificationsRepository };
