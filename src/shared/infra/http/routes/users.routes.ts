@@ -1,24 +1,24 @@
-import { Router } from "express";
-import multer from "multer";
+import { Router } from 'express';
+import multer from 'multer';
 
-import { CreateUserController } from "@modules/accounts/useCase/createUser/CreateUserController";
-import { UpdateUserAvatarController } from "@modules/accounts/useCase/updateUserAvatar/UpdateUserAvatarController";
+import { CreateUserController } from '@modules/accounts/useCase/createUser/CreateUserController';
+import { UpdateUserAvatarController } from '@modules/accounts/useCase/updateUserAvatar/UpdateUserAvatarController';
 
-import uploadConfig from "../../../../config/upload";
-import { ensureAuthenticated } from "../middlewares/ensureAthenticated";
+import uploadConfig from '../../../../config/upload';
+import { ensureAuthenticated } from '../middlewares/ensureAthenticated';
 
 const usersRoutes = Router();
 
-const uploadAvatar = multer(uploadConfig.upload("./tmp/avatar"));
+const uploadAvatar = multer(uploadConfig.upload('./tmp/avatar'));
 
 const createUserController = new CreateUserController();
 const updateUserAvatarController = new UpdateUserAvatarController();
 
-usersRoutes.post("/", createUserController.handle);
+usersRoutes.post('/', createUserController.handle);
 usersRoutes.patch(
-    "/avatar",
+    '/avatar',
     ensureAuthenticated,
-    uploadAvatar.single("avatar"),
+    uploadAvatar.single('avatar'),
     updateUserAvatarController.handle
 );
 
