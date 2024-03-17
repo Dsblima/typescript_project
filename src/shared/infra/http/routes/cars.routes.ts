@@ -41,3 +41,5 @@ carsRoutes.post(
     upload.array('images'),
     uploadCarImageController.handle
 );
+
+// carsRoutes.delete()
