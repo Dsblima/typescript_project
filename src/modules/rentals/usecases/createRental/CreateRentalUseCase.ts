@@ -9,14 +9,14 @@ interface IRequest {
 }
 
 export class CreateRentalUseCase {
-    constructor(private rentalReposaitory: IRentalsRepository) {}
+    constructor(private rentalRepository: IRentalsRepository) {}
 
     async execute({
         car_id,
         user_id,
         expected_return_date,
     }: IRequest): Promise<Rental> {
-        const isCarRented = await this.rentalReposaitory.findOpenedRentalByCar(
+        const isCarRented = await this.rentalRepository.findOpenedRentalByCar(
             car_id
         );
 
@@ -25,13 +25,13 @@ export class CreateRentalUseCase {
         }
 
         const isUserWithOpenedRented =
-            await this.rentalReposaitory.findOpenedRentalByUser(user_id);
+            await this.rentalRepository.findOpenedRentalByUser(user_id);
 
         if (isUserWithOpenedRented) {
             throw new AppError('This user already has a rental in his name');
         }
 
-        const createdRental = this.rentalReposaitory.createRental({
+        const createdRental = this.rentalRepository.createRental({
             user_id,
             car_id,
             expected_return_date,
