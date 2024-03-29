@@ -1,5 +1,6 @@
 import { Rental } from '@modules/rentals/infra/typeorm/entities/Rental';
 import { IRentalsRepository } from '@modules/rentals/repositories/IRentalsRepository';
+import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider';
 import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
@@ -9,13 +10,18 @@ interface IRequest {
 }
 
 export class CreateRentalUseCase {
-    constructor(private rentalRepository: IRentalsRepository) {}
+    constructor(
+        private rentalRepository: IRentalsRepository,
+        private dateProvider: IDateProvider
+    ) {}
 
     async execute({
         car_id,
         user_id,
         expected_return_date,
     }: IRequest): Promise<Rental> {
+        const MINIMUM_RENTAL_DURATION = 24;
+
         const isCarRented = await this.rentalRepository.findOpenedRentalByCar(
             car_id
         );
@@ -24,11 +30,20 @@ export class CreateRentalUseCase {
             throw new AppError('This car is unavailable');
         }
 
-        const isUserWithOpenedRented =
+        const isUserWithOpenedRental =
             await this.rentalRepository.findOpenedRentalByUser(user_id);
 
-        if (isUserWithOpenedRented) {
+        if (isUserWithOpenedRental) {
             throw new AppError('This user already has a rental in his name');
+        }
+
+        const compare = this.dateProvider.compareInHours(
+            this.dateProvider.dateNow(),
+            expected_return_date
+        );
+
+        if (compare < MINIMUM_RENTAL_DURATION) {
+            throw new AppError('Invalid return date!');
         }
 
         const createdRental = this.rentalRepository.createRental({
