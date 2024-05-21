@@ -12,13 +12,15 @@ export class CarsRepository implements ICarsRepository {
         this.repository = getRepository(Car);
     }
 
-    async findById(car_id: string): Promise<Car> {
-        const car = await this.repository.findOne(car_id);
+    async findById(id: string): Promise<Car> {
+        const car = await this.repository.findOne({
+            where: { id },
+        });
         return car;
     }
 
     async findByLicensePlate(license_plate: string): Promise<Car> {
-        const car = await this.repository.findOne({ license_plate });
+        const car = await this.repository.findOne({ where: { license_plate } });
         return car;
     }
 
@@ -80,5 +82,15 @@ export class CarsRepository implements ICarsRepository {
         const cars = await carsQuery.getMany();
 
         return cars;
+    }
+
+    async updateAvailable(id: string, available: boolean): Promise<void> {
+        await this.repository
+            .createQueryBuilder()
+            .update()
+            .set({ available })
+            .where('id = :id')
+            .setParameters({ id })
+            .execute();
     }
 }
