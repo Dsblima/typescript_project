@@ -4,6 +4,9 @@ import { Rental } from '@modules/rentals/infra/typeorm/entities/Rental';
 import { IRentalsRepository } from '../IRentalsRepository';
 
 export class RentalsRepositoryInMemory implements IRentalsRepository {
+    findById(id: string): Promise<Rental> {
+        throw new Error('Method not implemented.');
+    }
     rentals: Rental[] = [];
 
     async findOpenedRentalByCar(car_id: string): Promise<Rental> {
@@ -18,6 +21,9 @@ export class RentalsRepositoryInMemory implements IRentalsRepository {
         );
     }
 
+    async findByUser(user_id: string): Promise<Rental[]> {
+        return this.rentals.filter((rental) => rental.user_id === user_id);
+    }
     async createRental({
         car_id,
         user_id,
