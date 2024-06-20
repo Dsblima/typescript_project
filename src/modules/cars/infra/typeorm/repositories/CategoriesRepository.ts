@@ -26,7 +26,7 @@ export class CategoriesRepository implements ICategoryRepository {
     }
 
     async findByName(name: string): Promise<Category> {
-        const category = await this.repository.findOne({ name });
+        const category = await this.repository.findOne({ where: { name } });
         return category;
     }
 }
