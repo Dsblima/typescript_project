@@ -1,15 +1,5 @@
-import { Connection, createConnection, getConnectionOptions } from 'typeorm';
+import { DataSource } from 'typeorm';
 
-export default async (host = 'database'): Promise<Connection> => {
-    const defaultOptions = await getConnectionOptions();
+import { dataSourceOptions } from './config/DataSourceConfig';
 
-    return createConnection(
-        Object.assign(defaultOptions, {
-            host: process.env.NODE_ENV === 'test' ? 'localhost' : host,
-            database:
-                process.env.NODE_ENV === 'test'
-                    ? 'rentx_test'
-                    : defaultOptions.database,
-        })
-    );
-};
+export const connectionSource = new DataSource(dataSourceOptions);
