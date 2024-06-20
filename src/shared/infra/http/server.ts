@@ -1,3 +1,8 @@
+import { connectionSource } from '@shared/infra/typeorm';
+
 import { app } from './app';
 
-app.listen(3333, () => console.log('Server is running!!'));
+app.listen(3333, async () => {
+    await connectionSource.initialize();
+    console.log('Server is running!!');
+});
