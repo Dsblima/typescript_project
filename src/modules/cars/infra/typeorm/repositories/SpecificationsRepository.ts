@@ -1,17 +1,18 @@
 /* eslint-disable no-use-before-define */
-import { getRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { Specification } from '@modules/cars/infra/typeorm/entities/Specification';
 import {
     ICreateSpecificationDTO,
     ISpecificationsRepository,
 } from '@modules/cars/repositories/ISpecificationsRepository';
+import { connectionSource } from '@shared/infra/typeorm';
 
 export class SpecificationsRepository implements ISpecificationsRepository {
     private repository: Repository<Specification>;
 
     constructor() {
-        this.repository = getRepository(Specification);
+        this.repository = connectionSource.getRepository(Specification);
     }
 
     async findByIds(ids: string[]): Promise<Specification[]> {

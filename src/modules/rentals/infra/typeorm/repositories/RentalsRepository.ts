@@ -1,7 +1,8 @@
-import { Repository, getRepository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { ICreateRentalDTO } from '@modules/rentals/dto/ICreateRentalDTO';
 import { IRentalsRepository } from '@modules/rentals/repositories/IRentalsRepository';
+import { connectionSource } from '@shared/infra/typeorm';
 
 import { Rental } from '../entities/Rental';
 
@@ -9,7 +10,7 @@ export class RentalsRepository implements IRentalsRepository {
     private repository: Repository<Rental>;
 
     constructor() {
-        this.repository = getRepository(Rental);
+        this.repository = connectionSource.getRepository(Rental);
     }
 
     async findOpenedRentalByCar(car_id: string): Promise<Rental> {

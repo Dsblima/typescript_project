@@ -1,7 +1,8 @@
-import { Repository, getRepository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { ICreateCarDTO } from '@modules/cars/dtos/ICreateCarDTO';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
+import { connectionSource } from '@shared/infra/typeorm';
 
 import { Car } from '../entities/Car';
 
@@ -9,7 +10,7 @@ export class CarsRepository implements ICarsRepository {
     private repository: Repository<Car>;
 
     constructor() {
-        this.repository = getRepository(Car);
+        this.repository = connectionSource.getRepository(Car);
     }
 
     async findById(id: string): Promise<Car> {
