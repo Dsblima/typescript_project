@@ -4,8 +4,8 @@ import { Rental } from '@modules/rentals/infra/typeorm/entities/Rental';
 import { IRentalsRepository } from '../IRentalsRepository';
 
 export class RentalsRepositoryInMemory implements IRentalsRepository {
-    findById(id: string): Promise<Rental> {
-        throw new Error('Method not implemented.');
+    async findById(id: string): Promise<Rental> {
+        return this.rentals.find((rental) => rental.id === id);
     }
     rentals: Rental[] = [];
 

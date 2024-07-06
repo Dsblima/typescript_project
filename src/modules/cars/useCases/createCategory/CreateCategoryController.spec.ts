@@ -21,7 +21,7 @@ describe('Create Category Controller', () => {
 
     afterAll(async () => {
         await connectionSource.dropDatabase();
-        await connectionSource.close();
+        await connectionSource.destroy();
     });
 
     it('should be able to create a new category', async () => {
@@ -29,9 +29,6 @@ describe('Create Category Controller', () => {
             email: 'admin@rentx.com.br',
             password: 'admin',
         });
-
-        console.log('responseToken.body');
-        console.log(responseToken.body);
 
         const { token } = responseToken.body;
         const response = await request(app)

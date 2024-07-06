@@ -33,9 +33,6 @@ export class CreateCarSpecificationUseCase {
         carsExists.specifications = specifications;
 
         await this.carsRepository.create(carsExists);
-
-        console.log(carsExists);
-
         return carsExists;
     }
 }
