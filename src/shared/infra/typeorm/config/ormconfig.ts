@@ -1,7 +1,7 @@
 export const ConnectionOptions = {
     type: 'postgres',
     port: 5432,
-    host: '192.168.3.8',
+    host: '192.168.3.18',
     username: 'docker',
     password: 'ignite',
     database: 'rentx',

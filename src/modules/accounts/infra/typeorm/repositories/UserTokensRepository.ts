@@ -13,9 +13,9 @@ export class UserTokensRepository implements IUserTokensRepository {
         this.repository = connectionSource.getRepository(UserTokens);
     }
     async create({
-        expires_date,
-        refresh_token,
         user_id,
+        refresh_token,
+        expires_date,
     }: ICreateUserTokenDTO): Promise<UserTokens> {
         const userToken = this.repository.create({
             expires_date,
